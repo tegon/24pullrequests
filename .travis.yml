@@ -1,29 +1,23 @@
 language: ruby
-
 rvm:
-  - 2.2.3
-
+- 2.2.3
 env:
+  matrix:
   - DB=postgresql
-
+  global:
+    secure: NnEY8pNX3l6Avgt85XSRR/U21BmTNwJqsHQ5QzxYvn6hQkZkYwnBqalgFvKpbOwKV7cEL3dWDLsRG1YOH4ZjsmVsAmHWgH7E0YWE0LnZCR3aOKolOH8fs8tCfzbdE0HZMLI1Vk0awD/9i/6M91k9PspLTixIXwdJ6P0OPWdjDnSq3my+nXLvop0Ytq9o3fLR+TmJDYDS/I9qEm5ldmGSauEvE/GytVHSvQxYonlOu74ZdQwbiliLwiykHwN4BWVFuxa6IXOwXlQ+BwtUDeohzv5SeMkgF41f7dqQz3yFzG+ilLPfXlYuRl12f1iVSDhRKVnNFPLUx050aU1IB2Ri9A63TFPBmdd4GHVUjm5+ztmyixWmWR3jaz8cjzz5dEJLkuZJIargaby5J3YWwqqj2AVO9KOEIWGlxM0L3yEeo+MnfnMtz3tAn6Gz6ZcB27omtUXASMyeYbrL/3cjAfDocR4O0/Ov90UGwE4jVxOacX4LciU5FW5SvmnLJLNltDGbU0vl8jRaLoiml8Q9b7q9Aj3HQcL+U17uft6p7nfKXMdDCnwcSOjwLnXb3jZEgylFg9jKXatsC9s5OEFY4dpKeWsvUjgfulMihQa94V0Qu71wuuwD7kCRNeWew1LRHK/gYnu2PfCIGcOMhW00qSEbjvuwFOJJtuazHYpbawcLV1o=
 script:
-  - RAILS_ENV=test POLTERGEIST=true bundle exec rake --trace db:migrate spec konacha:run
-
+- RAILS_ENV=test POLTERGEIST=true bundle exec rake --trace db:migrate spec konacha:run
 before_script:
-  - psql -c 'create database tfpullrequests_test' -U postgres
-
-bundler_args: --without development production --deployment --jobs=3 --retry=3
-
+- psql -c 'create database tfpullrequests_test' -U postgres
+bundler_args: "--without development production --deployment --jobs=3 --retry=3"
 cache: bundler
-
 sudo: false
-
 addons:
   code_climate:
     repo_token: 2a5e192f091c667d87fbebdf75386384f0676f13cf3011b9cd4a006de7d1edfa
-
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/04f07b2eeecfad3cf278
+    - https://webhooks.gitter.im/e/04f07b2eeecfad3cf278
     on_success: change

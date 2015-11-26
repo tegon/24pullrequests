@@ -18,7 +18,6 @@ describe 'Static pages', type: :request do
     it { is_expected.to have_link('View All', href: projects_path) }
     it { is_expected.to have_link('View All', href: pull_requests_path) }
     it { is_expected.to have_link('Suggest a project', href: new_project_path) }
-
   end
 
   describe 'homepage in different dates' do
@@ -27,6 +26,7 @@ describe 'Static pages', type: :request do
         Timecop.travel(Date.new(CURRENT_YEAR, 12, 1))
         visit root_path
         is_expected.to_not have_content('24 Pull Requests is finished for')
+        Percy::Capybara.snapshot(page, name: 'homepage')
       end
 
       it "doesnt show the finished partial on the last day" do
